@@ -4,8 +4,9 @@ class CommentsController < ApplicationController
   def create
     @comment = @prototype.comments.build(comment_params)
     if @comment.save
-      redirect_to prototype_path(@prototype) # このようにPrefixでパスを指定することが望ましいです。
+      redirect_to prototype_path(@prototype) 
     else
+      @comments = @prototype.comments.includes(:user)
       render 'prototypes/show', status: :unprocessable_entity
     end
   end
